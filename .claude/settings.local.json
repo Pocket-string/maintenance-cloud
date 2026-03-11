@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_fill_form",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_evaluate",
+      "mcp__next-devtools__nextjs_call",
+      "mcp__playwright__browser_take_screenshot",
+      "Bash(pnpm run typecheck)",
+      "mcp__supabase__execute_sql",
+      "Bash(ls \"c:/Users/jonat/Jonathan/Software/SMU Maintenance Cloud/src/app/\\(main\\)/\")",
+      "Bash(ls \"c:/Users/jonat/Jonathan/Software/SMU Maintenance Cloud/src/app/\\(main\\)/plans/\")",
+      "Bash(ls \"c:/Users/jonat/Jonathan/Software/SMU Maintenance Cloud/src/app/\\(main\\)/maintenance/\")",
+      "Bash(pnpm run dev)",
+      "mcp__supabase__apply_migration",
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_file_upload",
+      "mcp__playwright__browser_close",
+      "mcp__playwright__browser_snapshot",
+      "Bash(find \"c:/Users/jonat/Jonathan/Software/SMU Maintenance Cloud/src/app/\\(main\\)\" -name \"layout.tsx\")",
+      "Bash(tasklist)",
+      "Bash(findstr /i node)",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_run_code",
+      "Skill(docker-deploy)",
+      "Skill(docker-deploy:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "next-devtools",
+    "playwright",
+    "supabase"
+  ]
+}

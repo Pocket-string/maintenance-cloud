@@ -1,0 +1,262 @@
+/* Google Fonts - Inter + DM Sans */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   DESIGN SYSTEM: BITALIZE CLOUD MANTENIMIENTO
+   Headings: DM Sans | Body: Inter
+   Estilo: Neumorphism (Soft UI)
+   ============================================ */
+
+:root {
+  /* Colores principales - Slate industrial */
+  --color-primary: #1E293B;
+  --color-primary-50: #F8FAFC;
+  --color-primary-100: #F1F5F9;
+  --color-primary-200: #E2E8F0;
+  --color-primary-300: #CBD5E1;
+  --color-primary-400: #94A3B8;
+  --color-primary-500: #1E293B;
+  --color-primary-600: #1A2332;
+  --color-primary-700: #151D29;
+  --color-primary-800: #0F1720;
+  --color-primary-900: #0A1017;
+
+  /* Azul operaciones */
+  --color-secondary: #2563EB;
+  --color-secondary-50: #EFF6FF;
+  --color-secondary-100: #DBEAFE;
+  --color-secondary-200: #BFDBFE;
+  --color-secondary-300: #93C5FD;
+  --color-secondary-400: #60A5FA;
+  --color-secondary-500: #2563EB;
+  --color-secondary-600: #1D4ED8;
+  --color-secondary-700: #1E40AF;
+  --color-secondary-800: #1E3A8A;
+  --color-secondary-900: #1E3370;
+
+  /* Acento para CTAs */
+  --color-accent: #2563EB;
+  --color-accent-50: #EFF6FF;
+  --color-accent-100: #DBEAFE;
+  --color-accent-200: #BFDBFE;
+  --color-accent-300: #93C5FD;
+  --color-accent-400: #60A5FA;
+  --color-accent-500: #2563EB;
+  --color-accent-600: #1D4ED8;
+  --color-accent-700: #1E40AF;
+
+  /* Estados */
+  --color-success: #10B981;
+  --color-success-light: #D1FAE5;
+  --color-warning: #F59E0B;
+  --color-warning-light: #FEF3C7;
+  --color-error: #EF4444;
+  --color-error-light: #FEE2E2;
+  --color-info: #3B82F6;
+  --color-info-light: #DBEAFE;
+
+  /* Estados de registros de mantenimiento */
+  --color-draft: #94A3B8;
+  --color-submitted: #2563EB;
+  --color-reviewed: #10B981;
+  --color-closed: #6B7280;
+
+  /* Superficies - Neumorphism */
+  --color-background: #e6e7ee;
+  --color-surface: #e6e7ee;
+  --color-surface-elevated: #e6e7ee;
+  --color-foreground: #1A1A2E;
+  --color-foreground-secondary: #64748B;
+  --color-foreground-muted: #94A3B8;
+  --color-border: transparent;
+  --color-border-light: transparent;
+
+  /* Neumorphic shadows */
+  --neu-dark: #b8b9be;
+  --neu-light: #ffffff;
+  --shadow-sm: 3px 3px 6px #b8b9be, -3px -3px 6px #ffffff;
+  --shadow-md: 6px 6px 12px #b8b9be, -6px -6px 12px #ffffff;
+  --shadow-lg: 8px 8px 16px #b8b9be, -8px -8px 16px #ffffff;
+  --shadow-xl: 12px 12px 24px #b8b9be, -12px -12px 24px #ffffff;
+  --shadow-inset: inset 4px 4px 8px #b8b9be, inset -4px -4px 8px #ffffff;
+  --shadow-inset-sm: inset 2px 2px 4px #b8b9be, inset -2px -2px 4px #ffffff;
+}
+
+html {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  line-height: 1.6;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-accent-500);
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: #1E293B;
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e6e7ee;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Tipografia para headings */
+h1, h2, h3, h4, h5, h6, .heading {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+@layer base {
+  /* Estados de registros de mantenimiento */
+  .status-draft { color: var(--color-draft); }
+  .status-submitted { color: var(--color-submitted); }
+  .status-reviewed { color: var(--color-reviewed); }
+  .status-closed { color: var(--color-closed); }
+}
+
+@layer components {
+  /* Card neumorphic */
+  .card-glass {
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+    border-radius: 16px;
+  }
+
+  /* Card elevada neumorphic */
+  .card-elevated {
+    background: var(--color-surface);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Badge de estado de registro */
+  .badge-draft {
+    background-color: #F1F5F9;
+    color: #475569;
+  }
+  .badge-submitted {
+    background-color: var(--color-info-light);
+    color: #1D4ED8;
+  }
+  .badge-reviewed {
+    background-color: var(--color-success-light);
+    color: #047857;
+  }
+  .badge-closed {
+    background-color: #F3F4F6;
+    color: #6B7280;
+  }
+
+  /* Sidebar navigation item - dark neumorphism */
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .nav-item:hover {
+    box-shadow: 3px 3px 6px #142942, -3px -3px 6px #284b7c;
+  }
+  .nav-item.active {
+    box-shadow: inset 3px 3px 6px #142942, inset -3px -3px 6px #284b7c;
+  }
+
+  /* Stat card neumorphic */
+  .stat-card {
+    background: var(--color-surface);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    transition: box-shadow 0.2s ease;
+  }
+  .stat-card:hover {
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: #e6e7ee;
+    box-shadow: 6px 6px 12px #b8b9be, -6px -6px 12px #ffffff;
+  }
+
+  .glass-dark {
+    background: #1e3a5f;
+    box-shadow: 6px 6px 12px #142942, -6px -6px 12px #284b7c;
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
+  }
+
+  /* Animaciones */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Utilidades de layout */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
