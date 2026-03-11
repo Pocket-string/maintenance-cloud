@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
+import { assertNotDemo } from '@/lib/demo-guard'
 import type { MaterialsLine } from '@/types/database'
 
 type ActionResult<T = void> = { success: true; data?: T } | { success: false; error: string }
@@ -72,6 +73,8 @@ export async function addMaterialLine(
   recordId: string,
   formData: FormData
 ): Promise<ActionResult<MaterialsLine>> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
@@ -123,6 +126,8 @@ export async function deleteMaterialLine(
   recordId: string,
   lineId: string
 ): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }

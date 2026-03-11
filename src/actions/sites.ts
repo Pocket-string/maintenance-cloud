@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { logAudit } from '@/actions/audit'
+import { assertNotDemo } from '@/lib/demo-guard'
 import type { SiteType } from '@/types/database'
 
 export interface CreateSiteState {
@@ -22,6 +23,12 @@ export async function createSite(
   _prevState: CreateSiteState,
   formData: FormData
 ): Promise<CreateSiteState> {
+  try {
+    await assertNotDemo()
+  } catch (e) {
+    return { error: e instanceof Error ? e.message : 'Accion no permitida en modo demo' }
+  }
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 

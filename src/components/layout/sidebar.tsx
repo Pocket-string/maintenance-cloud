@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { useDemo } from '@/hooks/useDemo'
+import { exitDemo } from '@/actions/demo'
 
 type UserRole = 'owner' | 'ops' | 'admin' | 'tech'
 
@@ -29,6 +31,7 @@ const navItems: NavItem[] = [
 export function Sidebar() {
   const pathname = usePathname()
   const router = useRouter()
+  const { isDemo } = useDemo()
   const [userRole, setUserRole] = useState<UserRole>('tech')
   const [userName, setUserName] = useState<string>('')
   const [isLoading, setIsLoading] = useState(true)
@@ -103,9 +106,16 @@ export function Sidebar() {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium truncate">{userName}</p>
-            <span className={`inline-flex text-[10px] px-2 py-0.5 rounded-full ${badge.color} text-white`}>
-              {badge.label}
-            </span>
+            <div className="flex items-center gap-1">
+              <span className={`inline-flex text-[10px] px-2 py-0.5 rounded-full ${badge.color} text-white`}>
+                {badge.label}
+              </span>
+              {isDemo && (
+                <span className="inline-flex text-[10px] px-2 py-0.5 rounded-full bg-amber-500 text-white">
+                  DEMO
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -146,13 +156,25 @@ export function Sidebar() {
 
       {/* Footer */}
       <div className="p-4 border-t border-white/10">
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/70 hover:shadow-[3px_3px_6px_#142942,-3px_-3px_6px_#284b7c] hover:text-white transition-shadow duration-200"
-        >
-          <LogoutIcon className="w-5 h-5" />
-          <span className="font-medium">Cerrar Sesion</span>
-        </button>
+        {isDemo ? (
+          <form action={exitDemo}>
+            <button
+              type="submit"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/70 hover:shadow-[3px_3px_6px_#142942,-3px_-3px_6px_#284b7c] hover:text-white transition-shadow duration-200"
+            >
+              <LogoutIcon className="w-5 h-5" />
+              <span className="font-medium">Salir del Demo</span>
+            </button>
+          </form>
+        ) : (
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/70 hover:shadow-[3px_3px_6px_#142942,-3px_-3px_6px_#284b7c] hover:text-white transition-shadow duration-200"
+          >
+            <LogoutIcon className="w-5 h-5" />
+            <span className="font-medium">Cerrar Sesion</span>
+          </button>
+        )}
       </div>
     </aside>
   )

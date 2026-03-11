@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
+import { assertNotDemo } from '@/lib/demo-guard'
 import type { Asset, AssetType, AssetStatus } from '@/types/database'
 
 // ------------------------------------------------------------------
@@ -260,6 +261,8 @@ export async function getAssetById(assetId: string): Promise<ActionResult<AssetW
 // ------------------------------------------------------------------
 
 export async function createAsset(formData: FormData): Promise<ActionResult<Asset>> {
+  await assertNotDemo()
+
   // Step 1 — Auth
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
@@ -329,6 +332,8 @@ export async function updateAsset(
   assetId: string,
   formData: FormData
 ): Promise<ActionResult<Asset>> {
+  await assertNotDemo()
+
   // Step 1 — Auth
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
@@ -395,6 +400,8 @@ export async function updateAsset(
 // ------------------------------------------------------------------
 
 export async function deleteAsset(assetId: string): Promise<ActionResult> {
+  await assertNotDemo()
+
   // Step 1 — Auth
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)

@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { logAudit } from '@/actions/audit'
+import { assertNotDemo } from '@/lib/demo-guard'
 import { generatePlanSchedule } from '@/actions/scheduled-tasks'
 import type { PlanStatus, MaintenancePlan, PlanCategory, PlanTask, UserRole } from '@/types/database'
 
@@ -190,6 +191,12 @@ export async function createMaintenancePlan(
   _prevState: CreatePlanState,
   formData: FormData
 ): Promise<CreatePlanState> {
+  try {
+    await assertNotDemo()
+  } catch (e) {
+    return { error: e instanceof Error ? e.message : 'Accion no permitida en modo demo' }
+  }
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
 
@@ -265,6 +272,8 @@ export async function createMaintenancePlan(
 export async function activatePlan(
   planId: string
 ): Promise<ActionResult<{ generatedTasks: number }>> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
@@ -330,6 +339,8 @@ export async function updatePlanStatus(
   planId: string,
   newStatus: PlanStatus
 ): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
@@ -393,6 +404,8 @@ export async function updatePlanStatus(
 export async function regenerateSchedule(
   planId: string
 ): Promise<ActionResult<{ generatedTasks: number }>> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
@@ -437,6 +450,8 @@ export async function regenerateSchedule(
 const ADMIN_ROLES: UserRole[] = ['owner', 'admin']
 
 export async function deletePlan(planId: string): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }

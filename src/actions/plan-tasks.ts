@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { logAudit } from '@/actions/audit'
+import { assertNotDemo } from '@/lib/demo-guard'
 import type { FrequencyType, PlanCategory, PlanTask } from '@/types/database'
 
 // ------------------------------------------------------------------
@@ -73,6 +74,8 @@ export async function addCategoryToPlan(
   planId: string,
   name: string
 ): Promise<ActionResult<PlanCategory>> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
@@ -133,6 +136,8 @@ export async function updateCategory(
   categoryId: string,
   name: string
 ): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
@@ -177,6 +182,8 @@ export async function updateCategory(
 // ------------------------------------------------------------------
 
 export async function deleteCategory(categoryId: string): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
@@ -233,6 +240,8 @@ export async function addTaskToPlan(
     frequencyDetail?: string | null
   }
 ): Promise<ActionResult<PlanTask>> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
@@ -305,6 +314,8 @@ export async function updatePlanTask(
     isActive: boolean
   }>
 ): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
@@ -356,6 +367,8 @@ export async function updatePlanTask(
 // ------------------------------------------------------------------
 
 export async function deletePlanTask(taskId: string): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }

@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { logAudit } from '@/actions/audit'
+import { assertNotDemo } from '@/lib/demo-guard'
 import type { ScheduledTaskStatus, MaintenanceType, RecordStatus } from '@/types/database'
 
 // ------------------------------------------------------------------
@@ -230,6 +231,8 @@ export async function completeScheduledTask(
   scheduledTaskId: string,
   maintenanceRecordId: string
 ): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
@@ -283,6 +286,8 @@ export async function skipScheduledTask(
   scheduledTaskId: string,
   reason: string
 ): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
@@ -332,6 +337,8 @@ export async function skipScheduledTask(
 export async function createRecordFromScheduledTask(
   scheduledTaskId: string
 ): Promise<never> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
 
@@ -673,6 +680,8 @@ export async function rescheduleTask(
   scheduledTaskId: string,
   newDate: string
 ): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }

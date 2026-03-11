@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { logAudit } from '@/actions/audit'
+import { assertNotDemo } from '@/lib/demo-guard'
 import type { MaintenanceType, RecordStatus, MaintenanceRecord, UserRole } from '@/types/database'
 
 // ------------------------------------------------------------------
@@ -235,6 +236,12 @@ export async function createMaintenanceRecord(
   _prevState: CreateRecordState,
   formData: FormData
 ): Promise<CreateRecordState> {
+  try {
+    await assertNotDemo()
+  } catch (e) {
+    return { error: e instanceof Error ? e.message : 'Accion no permitida en modo demo' }
+  }
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
 
@@ -346,6 +353,8 @@ export async function updateRecordStatus(
   recordId: string,
   newStatus: RecordStatus
 ): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
@@ -385,6 +394,8 @@ const ADMIN_ROLES: UserRole[] = ['owner', 'admin']
 export async function deleteMaintenanceRecord(
   recordId: string
 ): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }

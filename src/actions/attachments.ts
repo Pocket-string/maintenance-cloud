@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
+import { assertNotDemo } from '@/lib/demo-guard'
 import type { Attachment } from '@/types/database'
 
 type ActionResult<T = void> = { success: true; data?: T } | { success: false; error: string }
@@ -101,6 +102,8 @@ export async function uploadAttachment(
   recordId: string,
   formData: FormData
 ): Promise<ActionResult<AttachmentWithUrl>> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
@@ -174,6 +177,8 @@ export async function deleteAttachment(
   recordId: string,
   attachmentId: string
 ): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }

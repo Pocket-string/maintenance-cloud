@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import * as XLSX from 'xlsx'
 import { createClient } from '@/lib/supabase/server'
 import { logAudit } from '@/actions/audit'
+import { assertNotDemo } from '@/lib/demo-guard'
 import type { PlanStatus, PlanCategoryInsert, PlanTaskInsert } from '@/types/database'
 
 // ------------------------------------------------------------------
@@ -107,6 +108,8 @@ export async function importPlanFromExcel(
   planId: string,
   formData: FormData
 ): Promise<ActionResult<ImportResult>> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }

@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
+import { assertNotDemo } from '@/lib/demo-guard'
 import type { ChecklistItemType } from '@/types/database'
 
 // ------------------------------------------------------------------
@@ -124,6 +125,8 @@ export async function saveTaskChecklistItems(
     options?: string[] | null
   }>
 ): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
@@ -183,6 +186,8 @@ export async function saveTaskChecklistItems(
 export async function deleteTaskChecklistItem(
   itemId: string
 ): Promise<ActionResult> {
+  await assertNotDemo()
+
   const supabase = await createClient()
   const identity = await resolveOrgId(supabase)
   if (!identity) return { success: false, error: 'No autenticado' }
