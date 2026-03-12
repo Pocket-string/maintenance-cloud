@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 
 const DEMO_EMAIL = 'demo@bitalize.cloud'
-const DEMO_PASSWORD = 'BitalizeDemo2026!'
+const DEMO_PASSWORD = 'BitalizeDemo2026Secure'
 const DEMO_COOKIE = 'demo_mode'
 
 export async function enterDemo() {
