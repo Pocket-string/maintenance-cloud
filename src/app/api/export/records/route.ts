@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { isDemo } from '@/lib/demo-guard'
 import type { MaintenanceType, RecordStatus } from '@/types/database'
 
 const TYPE_LABELS: Record<MaintenanceType, string> = {
@@ -30,7 +31,8 @@ export async function GET() {
     .limit(1)
     .single()
 
-  if (!member || !['owner', 'ops', 'admin'].includes(member.role)) {
+  const demoMode = await isDemo()
+  if (!member || (!['owner', 'ops', 'admin'].includes(member.role) && !demoMode)) {
     return NextResponse.json({ error: 'Sin permisos' }, { status: 403 })
   }
 

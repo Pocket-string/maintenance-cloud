@@ -70,7 +70,13 @@ export function Sidebar() {
     router.push('/login')
   }
 
-  const filteredNavItems = navItems.filter(item => item.roles.includes(userRole))
+  const filteredNavItems = navItems.filter(item => {
+    if (isDemo) {
+      // In demo mode, show all read-only sections (hide only admin/users)
+      return item.href !== '/admin/users'
+    }
+    return item.roles.includes(userRole)
+  })
 
   const roleBadges: Record<UserRole, { label: string; color: string }> = {
     owner: { label: 'Owner', color: 'bg-purple-500' },

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { isDemo } from '@/lib/demo-guard'
 import * as XLSX from 'xlsx'
 import { getMonthlyReportData } from '@/actions/reports'
 
@@ -50,7 +51,8 @@ export async function GET(request: NextRequest) {
     .limit(1)
     .single()
 
-  if (!member || !['owner', 'ops', 'admin'].includes(member.role)) {
+  const demoMode = await isDemo()
+  if (!member || (!['owner', 'ops', 'admin'].includes(member.role) && !demoMode)) {
     return NextResponse.json({ error: 'Sin permisos' }, { status: 403 })
   }
 
