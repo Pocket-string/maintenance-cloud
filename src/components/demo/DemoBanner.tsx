@@ -9,27 +9,36 @@ export function DemoBanner() {
   if (!isDemo) return null
 
   return (
-    <div className="sticky top-0 z-50 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 flex items-center justify-between text-sm">
-      <div className="flex items-center gap-2">
-        <span className="inline-flex items-center gap-1 bg-white/20 px-2 py-0.5 rounded-full text-xs font-semibold">
+    <div className="sticky top-0 z-50 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-3 py-2 flex items-center justify-between text-sm gap-2">
+      <div className="flex items-center gap-2 min-w-0">
+        <span className="inline-flex shrink-0 items-center gap-1 bg-white/20 px-2 py-0.5 rounded-full text-xs font-semibold">
           <EyeIcon className="w-3 h-3" />
           DEMO
         </span>
-        <span>Estas explorando en modo demo — solo lectura</span>
+        {/* Full text on sm+ */}
+        <span className="hidden sm:inline truncate">
+          Estas explorando en modo demo — solo lectura
+        </span>
+        {/* Short text on mobile */}
+        <span className="sm:hidden truncate text-xs">
+          Modo demo — solo lectura
+        </span>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 shrink-0">
         <a
           href="#contacto"
-          className="bg-white text-blue-600 px-3 py-1 rounded-lg text-xs font-semibold hover:bg-blue-50 transition-colors"
+          className="bg-white text-blue-600 px-2 py-1 sm:px-3 rounded-lg text-xs font-semibold hover:bg-blue-50 transition-colors whitespace-nowrap"
         >
-          Solicitar Acceso
+          <span className="hidden sm:inline">Solicitar Acceso</span>
+          <span className="sm:hidden">Acceso</span>
         </a>
         <form action={exitDemo}>
           <button
             type="submit"
-            className="text-white/80 hover:text-white text-xs underline underline-offset-2 transition-colors"
+            className="text-white/80 hover:text-white text-xs underline underline-offset-2 transition-colors whitespace-nowrap"
           >
-            Salir del Demo
+            <span className="hidden sm:inline">Salir del Demo</span>
+            <span className="sm:hidden">Salir</span>
           </button>
         </form>
       </div>

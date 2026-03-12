@@ -12,7 +12,7 @@ export default function MainLayout({
       <div className="print:hidden">
         <Sidebar />
       </div>
-      <main className="ml-64 print:ml-0">
+      <main className="ml-0 lg:ml-64 print:ml-0 pt-14 lg:pt-0">
         {children}
       </main>
     </div>
