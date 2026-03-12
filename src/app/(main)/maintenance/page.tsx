@@ -39,20 +39,20 @@ export default async function MaintenancePage() {
   }))
 
   return (
-    <div className="p-6 md:p-8 max-w-7xl mx-auto">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Registros de Mantenimiento</h1>
-          <p className="text-foreground-secondary mt-1">
+    <div className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto">
+      <div className="mb-6 sm:mb-8">
+        <div className="mb-3">
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">Registros de Mantenimiento</h1>
+          <p className="text-foreground-secondary mt-1 text-sm">
             {recordRows.length} registro{recordRows.length !== 1 ? 's' : ''}
           </p>
         </div>
-        <div className="flex gap-3">
-          <a href="/api/export/records" download>
-            <Button variant="outline">Exportar CSV</Button>
+        <div className="flex gap-2 sm:gap-3">
+          <a href="/api/export/records" download className="flex-1 sm:flex-none">
+            <Button variant="outline" className="w-full sm:w-auto text-sm">Exportar CSV</Button>
           </a>
-          <Link href="/maintenance/new">
-            <Button>Nuevo Registro</Button>
+          <Link href="/maintenance/new" className="flex-1 sm:flex-none">
+            <Button className="w-full sm:w-auto text-sm">Nuevo Registro</Button>
           </Link>
         </div>
       </div>
